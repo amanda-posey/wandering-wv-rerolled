@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} 
+Our Journey So Far...
+{% endblock %} 
+
+{% block css_files %}
+  <link rel="stylesheet" href="{% static "blog/all-posts.css" %}" />
+  <link rel="stylesheet" href="{% static "blog/post.css" %}" /> />
+{% endblock %}
+
+{% block content %}
+  <section id='all-posts'>
+    <h2>The Journey So Far...</h2>
+
+    <ul>
+      {% include "blog/includes/post.html" %}
+    </ul>
+
+  </section>
+{% endblock %}

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poiret+One&family=Special+Elite&display=swap');
+
 #welcome {
     background: linear-gradient(to right top, #002855, #002759);
     padding: 6rem 12%;
@@ -22,15 +24,17 @@
 }
 
 #welcome h2 {
+    font-family: 'Special Elite', cursive;
     font-size: 3.5rem;
-    margin: 0 0 0 2rem;
+    margin: 2rem 0 0 2rem;
     color: #e4e4e4;
-    width: 10rem;
+    width: 30rem;
 }
 
 #welcome p {
     color: white;
     font-size: 1.5rem;
+    text-align: center;
 }
 
 #latest-posts {
@@ -67,6 +71,7 @@
 
 #about h2 {
     font-size: 3rem;
+    color: #36454F
 }
 
 #about p {

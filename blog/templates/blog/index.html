@@ -2,19 +2,19 @@
 {% load static %}
 
 {% block title %} 
-My Blog 
+WanderingWV
 {% endblock %} 
 
 {% block css_files %}
-  
+  <link rel="stylesheet" href="{% static "blog/post.css" %}" />
   <link rel="stylesheet" href="{% static "blog/index.css" %}" />
 {% endblock %}
 
 {% block content %}
 <section id="welcome">
   <header>
-    <img src="{% static "" %}" alt="Some pretty picture from WV" />
-    <h2>WanderingWV</h2>
+    <img src="{% static "blog/images/bridge_burst.jpeg" %}" alt="Some pretty picture from WV" />
+    <h2>Wandering<br>West Virginia</h2>
   </header>
   <p>Choose your own adventure in Wild, Wonderful West Virginia</p>
 </section>
@@ -23,7 +23,7 @@ My Blog
   <h2>Latest Updates</h2>
 
   <ul>
-    
+    {% include "blog/includes/post.html" %}
   </ul>
 </section>
 
