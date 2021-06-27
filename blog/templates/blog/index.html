@@ -23,7 +23,10 @@ WanderingWV
   <h2>Latest Updates</h2>
 
   <ul>
-    {% include "blog/includes/post.html" %}
+  <!--A freakin' for loop-->
+    {% for post in posts %}
+      {% include "blog/includes/post.html" %}
+    {% endfor %}
   </ul>
 </section>
 

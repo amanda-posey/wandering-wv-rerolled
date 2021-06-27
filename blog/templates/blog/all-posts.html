@@ -2,21 +2,22 @@
 {% load static %}
 
 {% block title %} 
-Our Journey So Far...
+All My Posts
 {% endblock %} 
 
 {% block css_files %}
+  <link rel="stylesheet" href="{% static "blog/post.css" %}" />
   <link rel="stylesheet" href="{% static "blog/all-posts.css" %}" />
-  <link rel="stylesheet" href="{% static "blog/post.css" %}" /> />
 {% endblock %}
 
 {% block content %}
-  <section id='all-posts'>
-    <h2>The Journey So Far...</h2>
+<section id="all-posts">
+  <h2>The Journey So Far:</h2>
 
-    <ul>
+  <ul>
+    {% for post in posts %}
       {% include "blog/includes/post.html" %}
-    </ul>
-
-  </section>
+    {% endfor %}
+  </ul>
+</section>
 {% endblock %}

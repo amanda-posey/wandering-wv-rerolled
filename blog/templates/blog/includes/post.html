@@ -1,13 +1,15 @@
-{% extpends 'base.html'%}
 {% load static %}
 
 <li>
-        <article class="post">
-            <a href="{% url "detail-page" slug="new-river-gorge" %}">
-            <img src="{% static "blog/images/bridge_day.jpeg" %}" alt="not final data" />
-            <h3>New River Gorge</h3>
-            <p>
-            As of publication, New River Gorge is the newest National Park on the list. And one day a year, people line up to jump 800+ feet to the ground below the bridge.
-            </p>
-        </article>
-    </li>
+    <article class="post">
+    <a href="{% url "detail-page" post.slug %}">
+        <img src="{% static "blog/images/"|add:post.image %}" alt="{{ post.title }}"/>
+        <div class="post__content">
+        <h3>{{ post.title }}</h3>
+        <p>
+            {{ post.excerpt }}
+        </p>
+        </div>
+    </a>
+    </article>
+</li>

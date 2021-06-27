@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+<!--Django automatically detects a native 404 file, so we don't have to build a route-->
+
+{% block title %}
+    We didn't find that page!
+{% endblock %}
+
+{% block content %}
+    <h2>We're sorry!</h2>
+    <p>We couldn't find that page. Feel free to blame Mothman.</p>
+{% endblock %}
