@@ -20,7 +20,6 @@ class Author(models.Model):
     def __str__(self):
         return self.full_name()
 
-
 class Post(models.Model):
     title = models.CharField(max_length=150)
     excerpt = models.CharField(max_length=250)
@@ -30,7 +29,7 @@ class Post(models.Model):
     content = models.TextField()
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True, related_name='posts')
     tags = models.ManyToManyField(Tag)
-    
+
 class Comment(models.Model):
     user_name = models.CharField(max_length=120)
     user_email = models.EmailField()
