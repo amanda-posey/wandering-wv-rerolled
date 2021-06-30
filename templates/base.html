@@ -16,13 +16,14 @@
     
     {% if user.is_authenticated %}
         <span><a href="{% url 'profile' user.username %}">Hello, {{ user.username }}!</a></span>
-        <span id="divider"> | </span>
+        
         
     {% else %}
         <span><a href="{% url 'login' %}">Login</a></span>
         <span id="divider"> | </span>
         <span><a href="{% url 'signup' %}">SignUp</a></span>
     {% endif %}
+    <span id="divider"> | </span>
     <a href="{% url "starting-page" %}">Home</a>
     <span id="divider"> | </span
     ><a href="{% url "posts-page" %}">All Posts</a>
@@ -33,5 +34,10 @@
 
 {% block content %}
 {% endblock %}
+
+<footer>
+    All Rights Reserved, WanderingWV 2021
+</footer>
+
 </body>
 </html>

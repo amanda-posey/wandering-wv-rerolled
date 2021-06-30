@@ -52,3 +52,11 @@ h3 {
     color: white;
     font-weight: bold;
 }
+
+#user-nav {
+    align-items: flex-start;
+}
+
+#app-nav {
+    align-items: flex-end;
+}
