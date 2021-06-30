@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} 
+Login
+{% endblock %} 
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static "blog/forms.css" %}"
+{% endblock %}
+
+{% block content %}
+
+<section id='form'>
+<h1>Log In</h1>
+<form method="POST" action=".">
+    {% csrf_token %}
+    {{ form.as_p}}
+    <input type="submit" value="Submit" />
+</form>
+</section>
+
+{% endblock %}

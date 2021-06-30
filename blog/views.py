@@ -5,7 +5,10 @@ from .forms import CommentForm
 from django.views import View 
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 # Create your views here.
 
@@ -19,38 +22,84 @@ class StartingPageView(ListView):
         queryset = super().get_queryset()
         data = queryset[:3]
         return data
+
 class AllPostsView(ListView):
     template_name = 'blog/all-posts.html'
     model = Post
     ordering = ['-date']
     context_object_name = 'posts'
-    
-class SinglePostView(DetailView):
-    template_name = 'blog/post-detail.html'
-    model = Post
-    
+
+class SinglePostView(View):
     def get(self, request, slug):
         post = Post.objects.get(slug=slug)
         context = {
-            'post': post,
-            'post_tags': post.tags.all(),
-            'comment_form': CommentForm
+            "post": post,
+            "post_tags": post.tags.all(),
+            "comment_form": CommentForm(),
+            "comments": post.comments.all().order_by("-id")
         }
-        return render(request, 'blog/post-detail.html', context)
-    
+        return render(request, "blog/post-detail.html", context)
+
     def post(self, request, slug):
         comment_form = CommentForm(request.POST)
         post = Post.objects.get(slug=slug)
-        
-        if comment_form.is_valid:
+
+        if comment_form.is_valid():
             comment = comment_form.save(commit=False)
             comment.post = post
             comment.save()
-            return HttpResponseRedirect(reverse('detail-page', args=[slug]))
-        
+
+            return HttpResponseRedirect(reverse("post-detail-page", args=[slug]))
+
         context = {
-            'post': post,
-            'post_tags': post.tags.all(),
-            'comment_form': CommentForm
+            "post": post,
+            "post_tags": post.tags.all(),
+            "comment_form": comment_form,
+            "comments": post.comments.all().order_by("-id")
         }
-        return render(request, 'blog/post-detail.html', context)
+        return render(request, "blog/post-detail.html", context)
+    
+# User Views
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserCreationForm()
+        return render(request, 'blog/signup.html', {'form': form})
+    
+# if post, then authenticate (user submitted username and password)
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, request.POST)
+        if form.is_valid():
+            u = form.cleaned_data['username']
+            p = form.cleaned_data['password']
+            user = authenticate(username = u, password = p)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponseRedirect('/user/'+u)
+                else:
+                    print('The account has been disabled.')
+                    return HttpResponseRedirect('/login')
+        else:
+            print('The username and/or password is incorrect.')
+            return HttpResponseRedirect('/login')
+    else: # it was a get request so send the emtpy login form
+        form = AuthenticationForm()
+        return render(request, 'blog/login.html', {'form': form})
+    
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('')
+
+@login_required
+def profile(request, username):
+    user = User.objects.get(username=username)
+    cats = Cat.objects.filter(user=user)
+    return render(request, 'profile.html', {'username': username, 'cats': cats})
