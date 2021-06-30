@@ -35,7 +35,7 @@
     </main>
 
     <section id="comment-form">
-  <h2>Your Comment</h2>
+  <h2>Join the Conversation!</h2>
   <form action="{% url "detail-page" post.slug %}" method="POST">
     {% csrf_token %}
     {% for form_field in comment_form %}

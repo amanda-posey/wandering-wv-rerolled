@@ -13,9 +13,21 @@
 <header id="main-navigation">
     <h1></h1>
     <nav>
+    
+    {% if user.is_authenticated %}
+        <span><a href="{% url 'profile' user.username %}">Hello, {{ user.username }}!</a></span>
+        <span id="divider"> | </span>
+        
+    {% else %}
+        <span><a href="{% url 'login' %}">Login</a></span>
+        <span id="divider"> | </span>
+        <span><a href="{% url 'signup' %}">SignUp</a></span>
+    {% endif %}
     <a href="{% url "starting-page" %}">Home</a>
-    |
-    <a href="{% url "posts-page" %}">All Posts</a>
+    <span id="divider"> | </span
+    ><a href="{% url "posts-page" %}">All Posts</a>
+    <span id="divider"> | </span
+    <span><a href="{% url 'logout' %}">Logout</a></span>
     </nav>
 </header>
 
