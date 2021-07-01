@@ -53,10 +53,12 @@ h3 {
     font-weight: bold;
 }
 
-#user-nav {
-    align-items: flex-start;
+/* #user-nav {
+    display: flex;
+    justify-content:flex-start;
 }
 
 #app-nav {
-    align-items: flex-end;
-}
+    display: flex;
+    justify-content: flex-end;
+} */

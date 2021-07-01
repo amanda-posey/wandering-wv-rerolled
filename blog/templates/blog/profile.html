@@ -1,15 +1,24 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 
+{% block title %} 
+Bookmarks
+{% endblock %} 
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static "blog/post.css" %}" />
+    <link rel="stylesheet" href="{% static "blog/all-posts.css" %}" />
+{% endblock %}
+
 {% block content %}
+<section id="all-posts">
+    <h2>{{ user.username }}'s Bookmarks</h2>
 
-<h1>{{ username }}'s favorites:</h1>
-
-{% for post in posts %}
-<a href="/{{ post.slug }}">
-    <h3>{{ post.title }}</h3>
-</a>
-
-{% endfor %}
+    <ul>
+    {% for post in posts %}
+        {% include "blog/includes/post.html" %}
+    {% endfor %}
+    </ul>
+</section>
 
 {% endblock %}

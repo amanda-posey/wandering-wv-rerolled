@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 from .models import Post
-from .forms import CommentForm
+from .forms import CommentForm, ProfileForm, UserForm
 from django.views import View 
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -67,7 +67,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('home')
+            return HttpResponseRedirect('/')
     else:
         form = UserCreationForm()
         return render(request, 'blog/signup.html', {'form': form})
@@ -100,5 +100,10 @@ def logout_view(request):
 
 @login_required
 def profile(request, username):
-    user = User.objects.get(username=username)
-    return render(request, 'profile.html', {'username': username})
+	user_form = UserForm(instance=request.user)
+	profile_form = ProfileForm(instance=request.user.profile)
+	return render(request=request, template_name="blog/profile.html", context={"user":request.user, "user_form":user_form, "profile_form":profile_form })
+
+class ReadLaterView(View):
+    def post(self, request):
+        stored_posts = request.session.get
