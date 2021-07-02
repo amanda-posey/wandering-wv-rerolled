@@ -11,5 +11,5 @@ urlpatterns = [
     path('logout/', views.logout_view, name="logout"),
     path('signup/', views.signup, name='signup'),
     path('user/<username>/', views.profile, name='profile'),
-    path('fav/<int:id>/', views.favorite_add, name='favorite_add')
+    path('fav/<slug:slug>/', views.favorite_add, name='favorite_add')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

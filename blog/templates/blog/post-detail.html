@@ -22,12 +22,25 @@
     <h2>{{ post.title }}</h2>
         <div>
             {% for tag in post_tags %}
-                <span class='tag'>{{ tag.caption }}</span>
+                <span class='tag'>{{ tag.caption }} County</span>
             {% endfor %}
         </div>
-        <div id='favorites'>
-            <a href='#'>Add to Favorites</a>
-        </div>
+
+        {% if request.user.is_authenticated %}
+            {% if fav %}    
+                <div id='favorites'>
+                    <a href="{% url "favorite_add" post.slug %}">Remove From Favorites</a>
+                </div>
+            {% else %}
+                <div id='favorites'>
+                    <a href="{% url "favorite_add" post.slug %}">Add to Favorites</a>
+                </div>
+            {% endif %}
+        {% else %}
+            <div id='favorites'>
+                <a href="{% url "signup" %}">Add to Favorites</a>
+            </div>
+        {% endif %}
         <article>
             <img src="{{ post.image.url }}" alt text='{{ post.image }}' />
             <address>By {{ post.author }}</address>
