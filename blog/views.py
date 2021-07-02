@@ -1,11 +1,11 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView
 from .models import Post, User
 from .forms import CommentForm, NewUserForm
 from django.views import View 
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
