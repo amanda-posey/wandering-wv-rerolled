@@ -103,6 +103,16 @@ def logout_view(request):
     return HttpResponseRedirect('/')
 
 @login_required
+def favorite_add(request, id):
+    post = get_object_or_404(Post, id=id)
+    if post.favorites.filter(id=request.user.id).exists():
+        post.favorites.remove(request.user)
+    else:
+        post.favorites.add(request.user)
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+        
+
+@login_required
 def profile(request, username):
     if request.method == 'POST':
         user_form = UserForm(instance=request.user)
