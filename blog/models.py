@@ -32,6 +32,7 @@ class Post(models.Model):
     content = models.TextField()
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True, related_name='posts')
     tags = models.ManyToManyField(Tag)
+    favorites = models.ManyToManyField(User, related_name='favorite', default=None, blank=True)
     
     def __str__(self):
         return self.title

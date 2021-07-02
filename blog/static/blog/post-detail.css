@@ -203,3 +203,7 @@ main {
 #comments h2 {
   color: #464646;
 }
+
+#favorites {
+  padding-top: 4rem;
+}

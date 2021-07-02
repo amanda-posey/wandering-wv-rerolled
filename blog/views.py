@@ -118,5 +118,5 @@ def profile(request, username):
         return HttpResponseRedirect('/user/'+username)
     user_form = UserForm(instance=request.user)
     profile_form = ProfileForm(instance=request.user.profile)
-    return render(request = request, template_name ="main/user.html", context = {"user":request.user, "user_form": user_form, "profile_form": profile_form })
+    return render(request = request, template_name ="blog/profile.html", context = {"user":request.user, "user_form": user_form, "profile_form": profile_form })
 

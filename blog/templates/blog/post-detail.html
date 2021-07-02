@@ -18,23 +18,15 @@
     </div>
 {% endif %}
 
-    <section id='summary'>
-        <h2>{{ post.title }}</h2>
+<section id='summary'>
+    <h2>{{ post.title }}</h2>
         <div>
             {% for tag in post_tags %}
                 <span class='tag'>{{ tag.caption }}</span>
             {% endfor %}
         </div>
-        <div id="bookmark">
-            {% if user.is_authenticated %}
-                <form method="post">
-                {% csrf_token %}
-                    <input type="hidden" value="{{post.slug}}" name="post_slug">
-                    <button>Add To Favorites</button>
-                </form>
-            {% else %}
-                <a href="/signup" class="btn btn-outline-primary" style="font-size:18px; border-radius: 50%">★</a>
-            {% endif %}
+        <div id='favorites'>
+            <a href='#'>Add to Favorites</a>
         </div>
         <article>
             <img src="{{ post.image.url }}" alt text='{{ post.image }}' />
