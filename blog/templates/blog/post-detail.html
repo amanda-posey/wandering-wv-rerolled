@@ -25,12 +25,16 @@
                 <span class='tag'>{{ tag.caption }}</span>
             {% endfor %}
         </div>
-        <div id='read-later'>
-            <form action="{% url "read-later" %}" method='POST'>
-            {% csrf_token %}
-            <input type='hidden' value="{{ post.id }}" name='post_id'>
-            <button>Read Later</button>
-            </form>
+        <div id="bookmark">
+            {% if user.is_authenticated %}
+                <form method="post">
+                {% csrf_token %}
+                    <input type="hidden" value="{{post.slug}}" name="post_slug">
+                    <button>Add To Favorites</button>
+                </form>
+            {% else %}
+                <a href="/signup" class="btn btn-outline-primary" style="font-size:18px; border-radius: 50%">★</a>
+            {% endif %}
         </div>
         <article>
             <img src="{{ post.image.url }}" alt text='{{ post.image }}' />

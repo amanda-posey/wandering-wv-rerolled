@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 from .models import Post
-from .forms import CommentForm, ProfileForm, UserForm
+from .forms import CommentForm, UserForm, ProfileForm, NewUserForm
 from django.views import View 
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -9,6 +9,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.contrib import messages
 
 # Create your views here.
 
@@ -43,6 +44,8 @@ class SinglePostView(View):
     def post(self, request, slug):
         comment_form = CommentForm(request.POST)
         post = Post.objects.get(slug=slug)
+        
+        request.user.profile.posts.add(post)
 
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
@@ -63,13 +66,14 @@ class SinglePostView(View):
 
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = NewUserForm(request.POST)
         if form.is_valid():
             user = form.save()
+            messages.success(request, 'Account created successfully')
             login(request, user)
             return HttpResponseRedirect('/')
     else:
-        form = UserCreationForm()
+        form = NewUserForm()
         return render(request, 'blog/signup.html', {'form': form})
     
 # if post, then authenticate (user submitted username and password)
@@ -96,14 +100,23 @@ def login_view(request):
     
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect('')
+    return HttpResponseRedirect('/')
 
 @login_required
 def profile(request, username):
-	user_form = UserForm(instance=request.user)
-	profile_form = ProfileForm(instance=request.user.profile)
-	return render(request=request, template_name="blog/profile.html", context={"user":request.user, "user_form":user_form, "profile_form":profile_form })
+    if request.method == 'POST':
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileForm(request.POST, instance=request.user.profile)
+        if user_form.is_valid():
+            user_form.save()
+            messages.success(request,('Your profile was successfully updated!'))
+        elif profile_form.is_valid():
+            profile_form.save()
+            messages.success(request,('Your wishlist was successfully updated!'))
+        else: 
+            messages.error(request,('Unable to complete request'))
+        return HttpResponseRedirect('/user/'+username)
+    user_form = UserForm(instance=request.user)
+    profile_form = ProfileForm(instance=request.user.profile)
+    return render(request = request, template_name ="main/user.html", context = {"user":request.user, "user_form": user_form, "profile_form": profile_form })
 
-class ReadLaterView(View):
-    def post(self, request):
-        stored_posts = request.session.get
