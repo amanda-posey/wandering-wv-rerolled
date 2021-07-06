@@ -1,2 +1,2 @@
-web: gunicorn project-four.wsgi
+web: gunicorn wanderingwv.wsgi
 release: python3 manage.py migrate
