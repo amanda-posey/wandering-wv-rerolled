@@ -1,0 +1,2 @@
+web: gunicorn wandering-wv.wsgi
+release: python3 manage.py migrate
