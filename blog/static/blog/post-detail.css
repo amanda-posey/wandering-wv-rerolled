@@ -205,5 +205,17 @@ main {
 }
 
 #favorites {
-  padding-top: 4rem;
+  padding-top: 3.5rem;
 }
+
+#carousel {
+  width: 90%;
+  max-width: 90rem;
+  margin: 3rem auto;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  justify-content: center;
+}
+

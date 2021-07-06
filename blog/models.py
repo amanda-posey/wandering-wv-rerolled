@@ -26,7 +26,18 @@ class Author(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=150)
     excerpt = models.CharField(max_length=250)
-    image = models.ImageField(upload_to="posts", null=True)
+    image1 = models.ImageField(upload_to="posts", null=True)
+    image1_title = models.CharField(max_length=100, null=True)
+    image1_caption = models.CharField(max_length=250, null=True)
+    image2 = models.ImageField(upload_to="posts", null=True)
+    image2_title = models.CharField(max_length=100, null=True)
+    image2_caption = models.CharField(max_length=250, null=True)
+    image3 = models.ImageField(upload_to="posts", null=True)
+    image3_title = models.CharField(max_length=100, null=True)
+    image3_caption = models.CharField(max_length=250, null=True)
+    image4 = models.ImageField(upload_to="posts", null=True)
+    image4_title = models.CharField(max_length=100, null=True)
+    image4_caption = models.CharField(max_length=250, null=True)
     date = models.DateField(auto_now=True) #Updates date on every update of the post
     slug = models.SlugField(unique=True, db_index=True) # Forces unique slug, and allows us to query by slug easier
     content = models.TextField()
