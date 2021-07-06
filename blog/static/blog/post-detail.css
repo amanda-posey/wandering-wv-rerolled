@@ -220,5 +220,5 @@ main {
 }
 
 .carousel-inner img {
-  width: 400px
+  max-height: 70rem;
 }

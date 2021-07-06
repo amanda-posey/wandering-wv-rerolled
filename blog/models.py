@@ -41,7 +41,7 @@ class Post(models.Model):
     date = models.DateField(auto_now=True) #Updates date on every update of the post
     slug = models.SlugField(unique=True, db_index=True) # Forces unique slug, and allows us to query by slug easier
     content = models.TextField()
-    author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True, related_name='posts')
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, related_name='posts')
     tags = models.ManyToManyField(Tag)
     favorites = models.ManyToManyField(User, related_name='favorite', default=None, blank=True)
     
