@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poiret+One&family=Special+Elite&display=swap');
+
 body {
   background-color: #e7e7e7;
 }
@@ -20,9 +22,11 @@ body {
 }
 
 #summary h2 {
-  color: white;
-  font-size: 4.5rem;
-  margin-bottom: 0.25rem;
+  font-family: 'Special Elite', cursive;
+  font-size: 3.5rem;
+  margin: 2rem 0 0 2rem;
+  color: #e4e4e4;
+  width: 50rem;
 }
 
 #summary article {
@@ -57,26 +61,6 @@ body {
   font-weight: bold;
 }
 
-#read-later {
-  margin: 3rem 0;
-}
-
-#read-later button {
-  background-color: #eaaa02;
-  border: 1px solid #eaaa02;
-  padding: 0.5rem 2rem;
-  font: inherit;
-  color: #002855;
-  cursor: pointer;
-
-}
-
-#read-later button:hover,
-#read-later button:active {
-  background-color: #f3c34a;
-  color: #002855;
-}
-
 main {
   width: 90%;
   max-width: 90rem;
@@ -92,6 +76,7 @@ main {
   color: #002855;
   padding: 0.5rem 1rem;
   border-radius: 8px;
+  margin: 2rem 0 0 2rem;
 }
 
 #comment-form {
@@ -205,7 +190,7 @@ main {
 }
 
 #favorites {
-  padding-top: 3.5rem;
+  padding-top: 5rem;
 }
 
 #carousel {
@@ -220,5 +205,9 @@ main {
 }
 
 .carousel-inner img {
-  max-height: 70rem;
+  max-height: 60rem;
+}
+
+#no-comments {
+  font-style: italic;
 }
