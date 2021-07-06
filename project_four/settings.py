@@ -13,6 +13,7 @@ import os
 from os import environ
 from pathlib import Path
 import dj_database_url
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +29,7 @@ SECRET_KEY = 'django-insecure-q+hnx=8h6_w^zwp3ykz@s$+#hdk#)1e!w_3&%mcrewz6ilwptl
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'wandering-wv.herokuapp.com'
+    'wanderingwv.herokuapp.com'
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -143,3 +144,5 @@ MEDIA_URL = "/files/"
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
+
+django_heroku.settings(locals())
