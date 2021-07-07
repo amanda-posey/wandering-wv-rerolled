@@ -14,7 +14,7 @@
     <nav>
     
     {% if user.is_authenticated %}
-        <span><a href="{% url 'profile' user.username %}">Hello, {{ user.username }}!</a></span>
+        <span><a href="{% url 'profile' user.username %}">Profile</a></span>
         
         
     {% else %}

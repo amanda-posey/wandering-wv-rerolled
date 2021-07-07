@@ -12,79 +12,16 @@ Bookmarks
 {% endblock %}
 
 {% block content %}
-
-<section id='user-control'>
-	<div class="container mx-auto">
-        <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-3 pb-4">
-                <div class="card p-4">
-                    <h4 class="card-title font-weight-bold text-center">Hello, {{ user.username|title }}</h4>
-                    <hr>
-                        <div class="card-text">
-                            <p class="text-muted mb-0" style="font-size: 12px">Username:</p>
-                            <p>{{ user.username }}</p>
-                            <p class="text-muted mb-0" style="font-size: 12px">Email:</p>
-                            <p>{{ user.email }} </p>
-                                <div class="text-right">
-                                    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#profileModal">Edit Profile</button>
-                                </div>
-                        </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<main>
-    <div class="col-sm-12 col-md-12 col-lg-9 pb-4"
-        <div class="col-sm-12 col-md-6 col-lg-4 pb-4">
-            <div class="h-100">
-                <section id="all-posts">
-                    <h2>{{ user.username|title }}'s Favorites</h2>
-                        <ul>
-                            {% for p in user.profile.posts.all %}
-                            {% include "blog/includes/post.html" %}
-                            {% endfor %}
-                        </ul>
-                </section>
-            </div>
-        </div>
-    </div>
-</main>
-
-<div class="modal fade" tabindex="-1" id="profileModal" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Profile</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-            </div>
-            <div class="modal-body">
-                <form method="post">
-                    {% csrf_token %}
-                    {{ user_form }}
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Save changes</button>
-                </form> 
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-{% comment %} {% block content %}
 <section id="all-posts">
-    <h2>{{ user.username }}'s Bookmarks</h2>
-
+    <h2>{{ user.username|title }}'s Bookmarks</h2>
+    <div>
     <ul>
-    {% for post in posts %}
+    {% for post in favorites %}
         {% include "blog/includes/post.html" %}
     {% endfor %}
     </ul>
-</section> {% endcomment %}
+    </div>
+</section>
 
 {% endblock %}
 

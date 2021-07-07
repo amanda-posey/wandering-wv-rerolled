@@ -53,6 +53,10 @@ h3 {
     font-weight: bold;
 }
 
+footer {
+    text-align: center;
+    
+}
 /* #user-nav {
     display: flex;
     justify-content:flex-start;

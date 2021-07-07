@@ -6,6 +6,8 @@
 {% endblock %} 
 
 {% block css_files %}
+<!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static "blog/post-detail.css" %}"
 {% endblock %}
 
@@ -22,14 +24,27 @@
     <h2>{{ post.title }}</h2>
         <div>
             {% for tag in post_tags %}
-                <span class='tag'>{{ tag.caption }}</span>
+                <span class='tag'>{{ tag.caption }} County</span>
             {% endfor %}
         </div>
-        <div id='favorites'>
-            <a href='#'>Add to Favorites</a>
-        </div>
+
+        {% if request.user.is_authenticated %}
+            {% if fav %}    
+                <div id='favorites'>
+                    <img src="{% static "blog/images/wv-fill.png" %}" height='56'/><a href="{% url "favorite_add" post.slug %}">Remove From Favorites</a>
+                </div>
+            {% else %}
+                <div id='favorites'>
+                    <img src="{% static "blog/images/wv-outline.png" %}" height='56'/><a href="{% url "favorite_add" post.slug %}">Add to Favorites</a>
+                </div>
+            {% endif %}
+        {% else %}
+            <div id='favorites'>
+                <a href="{% url "signup" %}">Add to Favorites</a>
+            </div>
+        {% endif %}
         <article>
-            <img src="{{ post.image.url }}" alt text='{{ post.image }}' />
+            <img src="{{ post.image1.url }}" alt text="{{ post.image1_title }}" />
             <address>By {{ post.author }}</address>
             <div>
                 Last updated on <time>{{ post.date|date:"d M Y" }}</time>
@@ -41,7 +56,58 @@
         {{ post.content|linebreaks }}
     </main>
 
+    <section id='carousel'>
+        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{{ post.image1.url }}" class="d-block w-100" alt="{{ post.image1_title }}">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>{{ post.image1_title }}</h5>
+        <p>{{ post.image1_caption }}</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="{{ post.image2.url }}" class="d-block w-100" alt="{{ post.image2_title }}">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>{{ post.image2_title }}</h5>
+        <p>{{ post.image2_caption }}</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="{{ post.image3.url }}" class="d-block w-100" alt="{{ post.image3_title }}">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>{{ post.image3_title }}</h5>
+        <p>{{ post.image3_caption }}</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="{{ post.image4.url }}" class="d-block w-100" alt="{{ post.image4_title }}">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>{{ post.image4_title }}</h5>
+        <p>{{ post.image4_caption }}</p>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+    </section>
+
     <section id='comments'>
+    <h4>Comments:</h4>
+      {% if comments %}
         <ul>
             {% for comment in comments %}
             <li>
@@ -50,6 +116,11 @@
             </li>
             {% endfor %}
         </ul>
+      {% else %}
+        <div id='no-comments'>
+          There are no comments to display.
+        </div>
+      {% endif %}
     </section>
 
     <section id="comment-form">
@@ -66,4 +137,6 @@
     <button>Save Comment</button>
   </form>
 </section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 {% endblock %}

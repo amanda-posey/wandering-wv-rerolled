@@ -1,14 +1,13 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView
-from .models import Post
-from .forms import CommentForm, UserForm, ProfileForm, NewUserForm
+from django.views.generic import ListView
+from .models import Post, User
+from .forms import CommentForm, NewUserForm
 from django.views import View 
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
 from django.contrib import messages
 
 # Create your views here.
@@ -33,11 +32,16 @@ class AllPostsView(ListView):
 class SinglePostView(View):
     def get(self, request, slug):
         post = Post.objects.get(slug=slug)
+        fav = bool
+        if post.favorites.filter(id=request.user.id).exists():
+            fav = True
+            
         context = {
             "post": post,
             "post_tags": post.tags.all(),
             "comment_form": CommentForm(),
-            "comments": post.comments.all().order_by("-id")
+            "comments": post.comments.all().order_by("-id"),
+            "fav": fav
         }
         return render(request, "blog/post-detail.html", context)
 
@@ -61,7 +65,7 @@ class SinglePostView(View):
             "comments": post.comments.all().order_by("-id")
         }
         return render(request, "blog/post-detail.html", context)
-    
+
 # User Views
 
 def signup(request):
@@ -103,20 +107,17 @@ def logout_view(request):
     return HttpResponseRedirect('/')
 
 @login_required
+def favorite_add(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    if post.favorites.filter(id=request.user.id).exists():
+        post.favorites.remove(request.user)
+    else:
+        post.favorites.add(request.user)
+    return HttpResponseRedirect(reverse("detail-page", args=[slug]))
+
+@login_required
 def profile(request, username):
-    if request.method == 'POST':
-        user_form = UserForm(instance=request.user)
-        profile_form = ProfileForm(request.POST, instance=request.user.profile)
-        if user_form.is_valid():
-            user_form.save()
-            messages.success(request,('Your profile was successfully updated!'))
-        elif profile_form.is_valid():
-            profile_form.save()
-            messages.success(request,('Your wishlist was successfully updated!'))
-        else: 
-            messages.error(request,('Unable to complete request'))
-        return HttpResponseRedirect('/user/'+username)
-    user_form = UserForm(instance=request.user)
-    profile_form = ProfileForm(instance=request.user.profile)
-    return render(request = request, template_name ="blog/profile.html", context = {"user":request.user, "user_form": user_form, "profile_form": profile_form })
+    user = User.objects.get(username=username)
+    favorites = Post.objects.filter(favorites=user.id)
+    return render(request, 'blog/profile.html', {'username': username, 'favorites': favorites})
 
